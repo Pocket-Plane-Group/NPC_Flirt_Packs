@@ -1,0 +1,331 @@
+BACKUP ~npcflirt\Backup~
+AUTHOR ~PocketPlaneGroup~ //  please, address all technical questions to forums.pocketplane.net
+VERSION ~v1.07~ 
+README ~npcflirt/npcflirt-readme.txt~
+
+ALWAYS
+
+  ACTION_IF GAME_IS ~eet~ BEGIN
+    OUTER_SET bg2_chapter = 12
+  END ELSE BEGIN
+    OUTER_SET bg2_chapter = 0
+  END
+  OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+    OUTER_SET bg2_chapter = bg2_chapter + 1
+    OUTER_SPRINT name_source ~bg2_chapter_%i%~
+    OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+  END
+
+/* EET continuous game: disable additional fate spirit summonings */
+
+  ACTION_IF NOT GAME_IS ~eet~ BEGIN
+    OUTER_SPRINT ~New_ToB_Game~ ~~
+  END
+
+  ACTION_IF GAME_IS ~eet~ BEGIN
+    OUTER_SPRINT ~New_ToB_Game~ ~Global("NEWGAME_TOB","GLOBAL",1)~
+  END
+
+
+  ACTION_IF GAME_IS ~bg2~ THEN BEGIN
+    INCLUDE ~%MOD_FOLDER%/lib/ids.tph~
+    CLEAR_IDS_MAP
+  END
+
+ 
+
+ACTION_IF !FILE_EXISTS ~npcflirt\backup/npcflirtreinstall.mrk~ BEGIN
+
+ 
+  //CamDawgs CD_STATE_NOTVALID zum Checken der Dialogfähigkeit eines Char
+  //Thank you very much, CamDawg!
+  APPEND ~STATE.IDS~ ~0x80101FEF CD_STATE_NOTVALID~ // adds custom IsValidForPartyDialogue state
+              UNLESS ~CD_STATE_NOTVALID~
+
+
+  ACTION_DEFINE_ARRAY fl#reload BEGIN setup END
+
+   LAF HANDLE_CHARSETS
+    INT_VAR
+      infer_charsets = 1
+    STR_VAR
+      default_language = ~english~
+      tra_path = EVAL ~%MOD_FOLDER%~
+      reload_array = fl#reload
+  END
+  COPY ~npcflirt/component.xx~ ~npcflirt/backup/npcflirtreinstall.mrk~
+END //npcflirtromreinstall.mrk
+
+LOAD_TRA ~npcflirt/english/setup.tra~
+LOAD_TRA ~npcflirt/%LANGUAGE%/setup.tra~
+
+END //ALWAYS
+
+
+
+// ASK_EVERY_COMPONENT
+
+LANGUAGE ~English~
+         ~english~
+         ~npcflirt/english/setup.tra~
+LANGUAGE ~Espanol (Traducido por Clan DLAN)~
+         ~spanish~
+         ~npcflirt/english/setup.tra~
+         ~npcflirt/spanish/setup.tra~
+LANGUAGE ~German (Translated by Beaz and Beyshaliban)~
+         ~german~
+         ~npcflirt/english/setup.tra~
+         ~npcflirt/german/setup.tra~
+LANGUAGE ~French (Translated by Thot)~
+         ~french~
+         ~npcflirt/english/setup.tra~
+         ~npcflirt/french/setup.tra~
+LANGUAGE ~Russian (Translated by Austin, Staylos $ Arcanecoast)~
+         ~russian~
+         ~npcflirt/english/setup.tra~
+         ~npcflirt/russian/setup.tra~
+
+BEGIN @1
+
+// Aerie SOA flirts
+
+
+
+COMPILE ~npcflirt\aeriesoaflirt.d~
+  USING ~npcflirt\english\aerietobflirt.tra~
+	~npcflirt\%s\aerietobflirt.tra~
+
+
+EXTEND_TOP ~aerie.bcs~ ~npcflirt\aeriesoainitflirt.baf~
+
+
+// Aerie/Solaufein SOA
+
+BEGIN @2
+
+COMPILE ~npcflirt\aeriesolaconflictsoa.d~
+USING ~npcflirt\english\aeriesolaconflictsoa.tra~
+	~npcflirt\%s\aeriesolaconflictsoa.tra~
+
+
+EXTEND_TOP ~aerie.bcs~ ~npcflirt\aeriesolaconflictsoa.baf~
+
+// Aerie TOB flirts
+
+BEGIN @3
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE EVALUATE_BUFFER ~npcflirt\aerietobflirt.d~
+  USING ~npcflirt\english\aerietobflirt.tra~
+	~npcflirt\%s\aerietobflirt.tra~
+
+
+EXTEND_TOP ~aeri25.bcs~ ~npcflirt\aerietobinitflirt.baf~
+EXTEND_TOP ~ar6200.bcs~ ~npcflirt\AerieAR6200.baf~
+
+COPY ~npcflirt\fwaernd1.2da~ ~override\fwaernd1.2da~
+  REPLACE ~99999~ @203
+
+COPY ~npcflirt\fwaernd1.2da~ ~override\fwaernd2.2da~
+  REPLACE ~99999~ @204
+
+
+
+// Aerie/Solaufein TOB
+
+BEGIN @4
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE ~npcflirt\aeriesolaconflicttob.d~
+USING ~npcflirt\english\aeriesolaconflictsoa.tra~
+	~npcflirt\%s\aeriesolaconflictsoa.tra~
+
+
+EXTEND_TOP ~aeri25.bcs~ ~npcflirt\aeriesolaconflicttob.baf~
+
+
+// Jaheira SOA
+
+
+BEGIN @5
+
+COMPILE ~npcflirt\jaheirasoaflirt.d~
+USING ~npcflirt\english\jaheiraflirt.tra~
+	~npcflirt\%s\jaheiraflirt.tra~
+
+EXTEND_TOP ~jaheira.bcs~ ~npcflirt\jaheirasoainitflirt.baf~
+
+
+// Jaheira/Solaufein SOA
+
+BEGIN @6
+
+COMPILE ~npcflirt\jsolaconflictsoa.d~
+USING ~npcflirt\english\jsolaconflictsoa.tra~
+	~npcflirt\%s\jsolaconflictsoa.tra~
+EXTEND_TOP ~jaheira.bcs~ ~npcflirt\jaheirasolaconflictsoa.baf~
+
+
+// Jaheira TOB
+
+BEGIN @7
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE EVALUATE_BUFFER ~npcflirt\jaheiratobflirt.d~
+USING ~npcflirt\english\jaheiraflirt.tra~
+~npcflirt\%s\jaheiraflirt.tra~
+
+EXTEND_TOP ~jahe25.bcs~ ~npcflirt\jaheiratobinitflirt.baf~
+EXTEND_TOP ~ar6200.bcs~ ~npcflirt\JaheiraAR6200.baf~
+
+COPY ~npcflirt\fwjahnd1.2da~ ~override\fwjahnd1.2da~
+  REPLACE ~99999~ @200
+
+COPY ~npcflirt\fwjahnd1.2da~ ~override\fwjahnd2.2da~
+  REPLACE ~99999~ @201
+
+COPY ~npcflirt\fwjahnd1.2da~ ~override\fwjahnd3.2da~
+  REPLACE ~99999~ @202
+
+
+
+// Jaheira/Solaufein TOB
+
+BEGIN @8
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE ~npcflirt\jsolaconflicttob.d~
+USING ~npcflirt\english\jsolaconflictsoa.tra~
+	~npcflirt\%s\jsolaconflictsoa.tra~
+
+EXTEND_TOP ~jahe25.bcs~ ~npcflirt\jaheirasolaconflicttob.baf~
+
+
+// Viconia SOA
+
+
+BEGIN @9
+
+COMPILE ~npcflirt\viconiasoaflirt.d~
+USING ~npcflirt\english\viconiaflirt.tra~
+	~npcflirt\%s\viconiaflirt.tra~
+
+EXTEND_TOP ~viconia.bcs~ ~npcflirt\viconiasoainitflirt.baf~
+
+
+// Viconia/Solaufein SOA
+
+BEGIN @10
+
+COMPILE ~npcflirt\vsolaconflictsoa.d~
+USING ~npcflirt\english\vsolaconflictsoa.tra~
+	~npcflirt\%s\vsolaconflictsoa.tra~
+EXTEND_TOP ~viconia.bcs~ ~npcflirt\viconiasolaconflictsoa.baf~
+
+
+// Viconia TOB
+
+BEGIN @11
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE EVALUATE_BUFFER ~npcflirt\viconiatobflirt.d~
+USING ~npcflirt\english\viconiaflirt.tra~
+~npcflirt\%s\viconiaflirt.tra~
+
+EXTEND_TOP ~vico25.bcs~ ~npcflirt\viconiatobinitflirt.baf~
+EXTEND_TOP ~ar6200.bcs~ ~npcflirt\ViconiaAR6200.baf~
+
+COPY ~npcflirt\fwvicnd1.2da~ ~override\fwvicnd1.2da~
+  REPLACE ~99999~ @205
+
+
+
+// Viconia/Solaufein TOB
+
+BEGIN @12
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE ~npcflirt\vsolaconflicttob.d~
+USING ~npcflirt\english\vsolaconflictsoa.tra~
+	~npcflirt\%s\vsolaconflictsoa.tra~
+
+EXTEND_TOP ~vico25.bcs~ ~npcflirt\viconiasolaconflicttob.baf~
+
+
+// Anomen SOA
+
+BEGIN @13
+
+// Argh, damnable problem with Kelsey-Anomen fight!
+
+ACTION_IF
+  FILE_EXISTS ~override\bj#klsy.dlg~
+  THEN BEGIN
+COMPILE ~npcflirt\anomenkelseyfix.d~
+END
+
+// give him new CN sounds in SOA
+
+ACTION_IF
+  FILE_EXISTS_IN_GAME ~mel01.cre~
+  THEN BEGIN
+EXTEND_TOP ~anomen.bcs~ ~npcflirt\anocnsound.baf~
+END
+
+
+COMPILE ~npcflirt\anomensoaflirt.d~
+USING ~npcflirt\english\anomenflirt.tra~
+~npcflirt\%s\anomenflirt.tra~
+
+ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
+COPY ~npcflirt\anobmp\ee~ ~override~
+END ELSE BEGIN
+COPY ~npcflirt\anobmp\bg2~ ~override~
+END
+COPY ~npcflirt\anospl~ ~override~
+
+EXTEND_TOP ~anomen.bcs~ ~npcflirt\anomensoainitflirt.baf~
+EXTEND_TOP ~anomen.bcs~ ~npcflirt\anomenshave.baf~ EVALUATE_BUFFER
+
+
+// Anomen/Solaufein SOA
+
+BEGIN @14
+
+COMPILE ~npcflirt\anosolaconflictsoa.d~
+USING ~npcflirt\english\anosolaconflictsoa.tra~
+	~npcflirt\%s\anosolaconflictsoa.tra~
+EXTEND_TOP ~anomen.bcs~ ~npcflirt\anomensolaconflictsoa.baf~
+
+
+
+// Anomen TOB
+
+BEGIN @15
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE EVALUATE_BUFFER ~npcflirt\anomentobflirt.d~
+USING ~npcflirt\english\anomenflirt.tra~
+~npcflirt\%s\anomenflirt.tra~
+
+EXTEND_TOP ~anom25.bcs~ ~npcflirt\anomentobinitflirt.baf~
+EXTEND_TOP ~ar6200.bcs~ ~npcflirt\AnomenAR6200.baf~
+
+COPY ~npcflirt\fwanond1.2da~ ~override\fwanond1.2da~
+  REPLACE ~99999~ @206
+
+
+
+
+// Anomen/Solaufein TOB
+
+BEGIN @16
+REQUIRE_PREDICATE GAME_IS ~tob bg2ee eet bgt~ @100
+
+COMPILE ~npcflirt\anosolaconflicttob.d~
+USING ~npcflirt\english\anosolaconflictsoa.tra~
+	~npcflirt\%s\anosolaconflictsoa.tra~
+EXTEND_TOP ~anom25.bcs~ ~npcflirt\anomensolaconflicttob.baf~
+
+
+

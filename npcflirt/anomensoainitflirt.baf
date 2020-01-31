@@ -1,0 +1,122 @@
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+        Global("AnomenRomanceActive","GLOBAL",2)
+        Global("AnomenRomanceActive","GLOBAL",1)
+    G("FWKnowMoiraDead",0)
+    Global("SaerkPlot","GLOBAL",1)
+    Global("TalkedCor","GLOBAL",0)
+THEN
+    RESPONSE #100
+             SG("FWKnowMoiraDead",1)
+END
+
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+        Global("AnomenRomanceActive","GLOBAL",2)
+        Global("AnomenRomanceActive","GLOBAL",1)
+    G("FWKnowMoiraDead",1)
+    Global("TalkedCor","GLOBAL",1)
+THEN
+    RESPONSE #100
+             SG("FWKnowMoiraDead",2)
+END
+
+
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("FWAnomenFlirtsStart","LOCALS",0)
+    G("FWDisableFlirtsNPC",0)
+    GlobalGT("Lovetalk","LOCALS",10)
+    OR(2)
+        Global("AnomenRomanceActive","GLOBAL",2)
+        Global("AnomenRomanceActive","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWAnomenFlirtsStart","LOCALS",1)
+        RealSetGlobalTimer("FWAnomenFlirt","LOCALS",300)
+END
+
+IF
+    RealGlobalTimerExpired("FWAnomenFlirt","LOCALS")
+    Global("FWAnomenStartFlirtSOA","GLOBAL",0)
+    G("FWDisableFlirtsNPC",0)
+    !G("FWKnowMoiraDead",1)
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !Global("Lovetalk","LOCALS",23)
+    OR(2)
+    Global("Lovetalk","LOCALS",11)
+    GlobalGT("Lovetalk","LOCALS",14)
+    OR(2)
+        Global("AnomenRomanceActive","GLOBAL",2)
+        Global("AnomenRomanceActive","GLOBAL",1)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !Range([NEUTRAL],10)
+    !AreaCheck("AR2100")
+    !AreaCheck("AR2101")
+    !AreaCheck("AR2102")
+    !AreaCheck("AR2200")
+    !AreaCheck("AR2201")
+    !AreaCheck("AR2202")
+    !AreaCheck("AR2203")
+    !AreaCheck("AR2204")
+    !AreaCheck("AR2205")
+    !AreaCheck("AR2206")
+    !AreaCheck("AR2207")
+    !AreaCheck("AR2208")
+    !AreaCheck("AR2209")
+    !AreaCheck("AR2210")
+    !AreaCheck("AR2400")
+    !AreaCheck("AR2401")
+    !AreaCheck("AR2402")
+THEN
+    RESPONSE #100
+        SetGlobal("FWAnomenStartFlirtSOA","GLOBAL",1)
+        StartDialogueNoSet(Player1)
+        SmallWait(1)
+END
+
+IF
+    RealGlobalTimerExpired("FWAnomenFlirt","LOCALS")
+    Global("FWAnomenStartFlirtSOA","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWAnomenStartFlirtSOA","GLOBAL",0)
+        SmallWait(1)
+        RealSetGlobalTimer("FWAnomenFlirt","LOCALS",2500)
+END
+
+/*
+IF
+    RealGlobalTimerExpired("FWAnomenFlirt","LOCALS")
+    !CombatCounter(0)
+THEN
+    RESPONSE #100
+        RealSetGlobalTimer("FWAnomenFlirt","LOCALS",250)
+END
+*/
+
+IF
+   InParty(Myself)
+   CombatCounter(0)
+   Global("FWAnomenMorningAfter","LOCALS",1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+

@@ -1,0 +1,75 @@
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("SolaTalk","GLOBAL",14)
+    Global("ViconiaRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #100
+        SetGlobal("ViconiaRomanceActive","GLOBAL",3)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("ViconiaRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",10)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWViconiaNotesSolaufein","LOCALS",0)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("ViconiaRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",12)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWViconiaObjectsSolaufein","LOCALS",0)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+
+/* initiation */
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("ViconiaRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",14)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWViconiaObjectsSolaufein","LOCALS",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWViconiaObjectsSolaufein","LOCALS",2)
+END
+
+/* activation */
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    Global("FWViconiaObjectsSolaufein","LOCALS",2)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END

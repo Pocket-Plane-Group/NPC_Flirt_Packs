@@ -1,0 +1,17 @@
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Anomen")
+    Global("PlayerChoseEssence","GLOBAL",1)
+    Global("FWAnomenBadCNEp","GLOBAL",1)
+    Global("AnomenBio","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("AnomenBio","GLOBAL",1)
+        TextScreen("FWANOND1")
+        SetGlobal("AnomenBio","GLOBAL",1)
+        SmallWait(1)
+        SetGlobal("AnomenBio","GLOBAL",1)
+        Continue()
+        SetGlobal("AnomenBio","GLOBAL",1)
+END
+

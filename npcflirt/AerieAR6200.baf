@@ -1,0 +1,35 @@
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Aerie")
+    Global("AerieRomanceActive","GLOBAL",2)
+    Global("FWAerieHasWings","GLOBAL",1)
+    Global("AerieBio","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("AerieBio","GLOBAL",1)
+        TextScreen("FWAERND2")
+        SetGlobal("AerieBio","GLOBAL",1)
+        SmallWait(1)
+        SetGlobal("AerieBio","GLOBAL",1)
+        Continue()
+        SetGlobal("AerieBio","GLOBAL",1)
+END
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Aerie")
+    !Global("AerieRomanceActive","GLOBAL",2)
+    Global("FWAerieHasWings","GLOBAL",1)
+    Global("AerieBio","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("AerieBio","GLOBAL",1)
+        TextScreen("FWAERND1")
+        SetGlobal("AerieBio","GLOBAL",1)
+        SmallWait(1)
+        SetGlobal("AerieBio","GLOBAL",1)
+        Continue()
+        SetGlobal("AerieBio","GLOBAL",1)
+END
+
+

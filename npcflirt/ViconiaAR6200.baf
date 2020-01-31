@@ -1,0 +1,18 @@
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Viconia")
+    Global("PlayerChoseEssence","GLOBAL",0)
+    Global("ViconiaRomanceActive","GLOBAL",2)
+    Global("FWViconiaEvilEp","GLOBAL",1)
+    Global("ViconiaBio","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("ViconiaBio","GLOBAL",1)
+        TextScreen("FWVICND1")
+        SetGlobal("ViconiaBio","GLOBAL",1)
+        SmallWait(1)
+        SetGlobal("ViconiaBio","GLOBAL",1)
+        Continue()
+        SetGlobal("ViconiaBio","GLOBAL",1)
+END
+

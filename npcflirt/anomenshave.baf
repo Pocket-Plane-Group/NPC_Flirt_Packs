@@ -1,0 +1,21 @@
+IF
+	G("FWShavedAnomen",2)
+THEN
+	RESPONSE #100
+		SG("FWShavedAnomen",3)
+		ApplySpellRES("FWANOSHV",Myself)
+		SetGlobalTimer("FWAnomenGrowBeard","LOCALS",SEVEN_DAYS)
+END
+
+IF
+    CombatCounter(0)
+    !See([ENEMY])
+	G("FWShavedAnomen",3)
+	OR(2)
+		GlobalTimerExpired("FWAnomenGrowBeard","LOCALS")
+		Global("Chapter","GLOBAL",%bg2_chapter_7%)
+THEN
+	RESPONSE #100
+		SG("FWShavedAnomen",4)
+		ApplySpellRES("FWANOBRD",Myself)
+END

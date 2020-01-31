@@ -1,0 +1,67 @@
+IF
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("SolaTalk","GLOBAL",14)
+    Global("JaheiraRomanceActive","GLOBAL",2)
+THEN
+    RESPONSE #100
+        SetGlobal("JaheiraRomanceActive","GLOBAL",3)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("JaheiraRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",10)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWJaheiraNotesSolaufein","LOCALS",0)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("JaheiraRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",12)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWJaheiraObjectsSolaufein","LOCALS",0)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+
+/* initiation */
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("JaheiraRomanceActive","GLOBAL",2)
+    Global("SolaTalk","GLOBAL",14)
+    Global("SolaPCTalk","GLOBAL",0)
+    Global("FWJaheiraObjectsSolaufein","LOCALS",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWJaheiraObjectsSolaufein","LOCALS",2)
+END
+
+/* activation */
+IF
+    InParty(Myself)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("FWJaheiraObjectsSolaufein","LOCALS",2)
+THEN
+    RESPONSE #100
+        Dialogue(Player1)
+END
+
+

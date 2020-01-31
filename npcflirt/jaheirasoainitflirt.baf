@@ -1,0 +1,81 @@
+IF
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("FWJaheiraFlirtsStart","LOCALS",0)
+    G("FWDisableFlirtsNPC",0)
+    GlobalGT("Lovetalk","LOCALS",12)
+    OR(2)
+        Global("JaheiraRomanceActive","GLOBAL",2)
+        Global("JaheiraRomanceActive","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWJaheiraFlirtsStart","LOCALS",1)
+        RealSetGlobalTimer("FWJaheiraFlirt","LOCALS",300)
+END
+
+
+IF
+    RealGlobalTimerExpired("FWJaheiraFlirt","LOCALS")
+    Global("FWJaheiraStartFlirtSOA","GLOBAL",0)
+    G("FWDisableFlirtsNPC",0)
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !Global("Lovetalk","LOCALS",59)
+    !Global("Lovetalk","LOCALS",60)
+    !Global("Lovetalk","LOCALS",61)
+    OR(2)
+        Global("JaheiraRomanceActive","GLOBAL",2)
+        Global("JaheiraRomanceActive","GLOBAL",1)
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    !Range([NEUTRAL],10)
+    !AreaCheck("AR2100")
+    !AreaCheck("AR2101")
+    !AreaCheck("AR2102")
+    !AreaCheck("AR2200")
+    !AreaCheck("AR2201")
+    !AreaCheck("AR2202")
+    !AreaCheck("AR2203")
+    !AreaCheck("AR2204")
+    !AreaCheck("AR2205")
+    !AreaCheck("AR2206")
+    !AreaCheck("AR2207")
+    !AreaCheck("AR2208")
+    !AreaCheck("AR2209")
+    !AreaCheck("AR2210")
+    !AreaCheck("AR2400")
+    !AreaCheck("AR2401")
+    !AreaCheck("AR2402")
+THEN
+    RESPONSE #100
+        SetGlobal("FWJaheiraStartFlirtSOA","GLOBAL",1)
+        StartDialogueNoSet(Player1)
+        SmallWait(1)
+END
+
+
+IF
+    RealGlobalTimerExpired("FWJaheiraFlirt","LOCALS")
+    Global("FWJaheiraStartFlirtSOA","GLOBAL",1)
+THEN
+    RESPONSE #100
+        SetGlobal("FWJaheiraStartFlirtSOA","GLOBAL",0)
+        SmallWait(1)
+        RealSetGlobalTimer("FWJaheiraFlirt","LOCALS",2500)
+END
+
+
+/*
+IF
+    RealGlobalTimerExpired("FWJaheiraFlirt","LOCALS")
+    !CombatCounter(0)
+THEN
+    RESPONSE #100
+        RealSetGlobalTimer("FWJaheiraFlirt","LOCALS",150)
+END
+
+*/
+
+

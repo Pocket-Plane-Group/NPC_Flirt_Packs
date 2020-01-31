@@ -1,0 +1,19 @@
+IF
+	Alignment(Myself,CHAOTIC_NEUTRAL)
+	Global("NewSounds","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetPlayerSound(Myself,70837,UNHAPPY_SERIOUS)
+		SetPlayerSound(Myself,70838,LEADER)
+		SetPlayerSound(Myself,70839,TIRED)
+		SetPlayerSound(Myself,70840,BORED)
+		SetPlayerSound(Myself,70841,BATTLE_CRY1)
+		SetPlayerSound(Myself,70842,BATTLE_CRY2)
+		SetPlayerSound(Myself,70843,AREA_CITY)
+		SetPlayerSound(Myself,70844,SELECT_COMMON1)
+		SetPlayerSound(Myself,70845,SELECT_COMMON4)
+		SetPlayerSound(Myself,70846,SELECT_ACTION1)
+		SetPlayerSound(Myself,70847,SELECT_ACTION4)
+		SetPlayerSound(Myself,70848,SELECT_ACTION5)
+		SetGlobal("NewSounds","LOCALS",1)
+END
