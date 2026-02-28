@@ -43,6 +43,7 @@ ACTION_IF !FILE_EXISTS ~npcflirt\backup/npcflirtreinstall.mrk~ BEGIN
               UNLESS ~CD_STATE_NOTVALID~
 
 
+  ACTION_DEFINE_ARRAY fl#noconvert BEGIN install END
   ACTION_DEFINE_ARRAY fl#reload BEGIN setup END
 
    LAF HANDLE_CHARSETS
@@ -52,6 +53,7 @@ ACTION_IF !FILE_EXISTS ~npcflirt\backup/npcflirtreinstall.mrk~ BEGIN
       default_language = ~english~
       tra_path = EVAL ~%MOD_FOLDER%~
       reload_array = fl#reload
+	  noconvert_array = fl#noconvert
   END
   COPY ~npcflirt/component.xx~ ~npcflirt/backup/npcflirtreinstall.mrk~
 END //npcflirtromreinstall.mrk
@@ -84,7 +86,10 @@ LANGUAGE ~Russian (Translated by Austin, Staylos $ Arcanecoast)~
          ~russian~
          ~npcflirt/english/setup.tra~
          ~npcflirt/russian/setup.tra~
-
+LANGUAGE ~Chinese~
+         ~schinese~
+         ~npcflirt/schinese/install.tra~
+		 
 BEGIN @1
 
 // Aerie SOA flirts
